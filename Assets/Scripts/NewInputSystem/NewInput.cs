@@ -71,6 +71,15 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reloaded"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd5ef336-18df-4ed9-b473-385193bd849d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
                     ""action"": ""MouseClickRihgtButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""173aea98-92ff-40c0-8c07-2deae5f439c7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reloaded"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -185,6 +205,7 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
         m_Gameplay_DeltaX = m_Gameplay.FindAction("DeltaX", throwIfNotFound: true);
         m_Gameplay_DeltaY = m_Gameplay.FindAction("DeltaY", throwIfNotFound: true);
         m_Gameplay_MouseClickRihgtButton = m_Gameplay.FindAction("MouseClickRihgtButton", throwIfNotFound: true);
+        m_Gameplay_Reloaded = m_Gameplay.FindAction("Reloaded", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +272,7 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_DeltaX;
     private readonly InputAction m_Gameplay_DeltaY;
     private readonly InputAction m_Gameplay_MouseClickRihgtButton;
+    private readonly InputAction m_Gameplay_Reloaded;
     public struct GameplayActions
     {
         private @NewInput m_Wrapper;
@@ -260,6 +282,7 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
         public InputAction @DeltaX => m_Wrapper.m_Gameplay_DeltaX;
         public InputAction @DeltaY => m_Wrapper.m_Gameplay_DeltaY;
         public InputAction @MouseClickRihgtButton => m_Wrapper.m_Gameplay_MouseClickRihgtButton;
+        public InputAction @Reloaded => m_Wrapper.m_Gameplay_Reloaded;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -284,6 +307,9 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
             @MouseClickRihgtButton.started += instance.OnMouseClickRihgtButton;
             @MouseClickRihgtButton.performed += instance.OnMouseClickRihgtButton;
             @MouseClickRihgtButton.canceled += instance.OnMouseClickRihgtButton;
+            @Reloaded.started += instance.OnReloaded;
+            @Reloaded.performed += instance.OnReloaded;
+            @Reloaded.canceled += instance.OnReloaded;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -303,6 +329,9 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
             @MouseClickRihgtButton.started -= instance.OnMouseClickRihgtButton;
             @MouseClickRihgtButton.performed -= instance.OnMouseClickRihgtButton;
             @MouseClickRihgtButton.canceled -= instance.OnMouseClickRihgtButton;
+            @Reloaded.started -= instance.OnReloaded;
+            @Reloaded.performed -= instance.OnReloaded;
+            @Reloaded.canceled -= instance.OnReloaded;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -327,5 +356,6 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
         void OnDeltaX(InputAction.CallbackContext context);
         void OnDeltaY(InputAction.CallbackContext context);
         void OnMouseClickRihgtButton(InputAction.CallbackContext context);
+        void OnReloaded(InputAction.CallbackContext context);
     }
 }
