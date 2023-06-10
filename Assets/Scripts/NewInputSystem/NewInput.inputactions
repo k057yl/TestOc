@@ -47,13 +47,31 @@
                     "id": "aaebeac8-e416-4ad7-94ee-fad70ab997b0",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Reloaded",
                     "type": "Button",
                     "id": "bd5ef336-18df-4ed9-b473-385193bd849d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MouseClickMiddleButton",
+                    "type": "Button",
+                    "id": "fc3ec0dd-ad67-4ced-83c7-8ef11e274f98",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MouseClickLeftButton",
+                    "type": "Button",
+                    "id": "80ca76a1-6cec-469d-8a8f-f17334c891e6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -168,6 +186,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reloaded",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21175b9a-1247-459f-ab5b-d4311af9cead",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseClickMiddleButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d7a4cb1-ab95-4bb6-9cc1-be14f9b2bffd",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseClickLeftButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
