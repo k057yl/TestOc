@@ -6,6 +6,8 @@ public class SoundManager : MonoBehaviour
     private AudioSource _audioSource;
 
     [SerializeField] private AudioClip _stepSound;
+    [SerializeField] private AudioClip _shotSound;
+    [SerializeField] private AudioClip _deathSound;
     
     private bool _canPlayStepSound = true;
     private float _stepSoundInterval = 0.5f;
@@ -44,5 +46,15 @@ public class SoundManager : MonoBehaviour
         {
             StopCoroutine(StepSoundCoroutine);
         }
+    }
+    
+    public void PlayShotSound()
+    {
+        _audioSource.PlayOneShot(_shotSound);
+    }
+    
+    public void PlayDeathSound()
+    {
+        _audioSource.PlayOneShot(_deathSound);
     }
 }

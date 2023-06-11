@@ -67,5 +67,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1750310774051699431, guid: 68f90be366b798348afe0a3c73089ba2,
+        type: 3}
+      propertyPath: _uiBar
+      value: 
+      objectReference: {fileID: 1649022395512865994, guid: 13c74def520dfb145a1ccb73e3812828,
+        type: 3}
+    - target: {fileID: 1750310774051699431, guid: 68f90be366b798348afe0a3c73089ba2,
+        type: 3}
+      propertyPath: _uiBarPrefab
+      value: 
+      objectReference: {fileID: 5318468397782674686, guid: 13c74def520dfb145a1ccb73e3812828,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68f90be366b798348afe0a3c73089ba2, type: 3}

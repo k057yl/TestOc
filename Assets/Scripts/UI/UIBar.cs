@@ -6,15 +6,16 @@ public class UIBar : MonoBehaviour
 {
     [SerializeField] private Text _ammoText;
     [SerializeField] private Text _totalAmmoText;
-
-    public void UpdateAmmoText(int currentAmmo, int totalAmmo)
+    [SerializeField] private Text _killedText;
+    
+    public void UpdateAmmoText(int currentAmmo, int maxAmmo)
     {
         _ammoText.text = currentAmmo.ToString();
-        _totalAmmoText.text = totalAmmo.ToString();
+        _totalAmmoText.text = maxAmmo.ToString();
     }
-
-    private void Update()
+    
+    public void UpdateKilledText(int killed)
     {
-        _ammoText.text.ToString();
+        _killedText.text = killed.ToString();
     }
 }

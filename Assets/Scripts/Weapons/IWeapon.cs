@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IWeaponStrategy
+public interface IWeapon
 {
     void Fire(Transform shootPoint);
     void ReloadByButton();

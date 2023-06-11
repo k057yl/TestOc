@@ -90,6 +90,8 @@ MonoBehaviour:
   _soundManagerPrefab: {fileID: 1787872839680099447, guid: 4c438a1573348f749ae7807232c3bc42,
     type: 3}
   _pistolShootPoint: {fileID: 4061094361887832645}
+  _uiBarPrefab: {fileID: 1649022395512865994, guid: 13c74def520dfb145a1ccb73e3812828,
+    type: 3}
 --- !u!143 &1750310774051699424
 CharacterController:
   m_ObjectHideFlags: 0

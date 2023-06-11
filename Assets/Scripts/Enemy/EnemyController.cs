@@ -1,23 +1,22 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : EnemyAbstract
 {
-    private const float DESTRUCTION_AFTER_DEATH = 5f;
+    private const float DESTRUCTION_AFTER_DEATH = 1.5f;
     
-    public Animator _anim;
-    public Rigidbody[] AllRigidbodies;
-    public ParticleSystem Blood;
+    [SerializeField] private Animator _anim;
+    [SerializeField] private Rigidbody[] _allRigidbodies;
+    [SerializeField] private ParticleSystem _blood;
     
     private NavMeshAgent _navMeshAgent;
     private GameObject _player;
 
     private void Awake()
     {
-        for (int i = 0; i < AllRigidbodies.Length; i++)
+        for (int i = 0; i < _allRigidbodies.Length; i++)
         {
-            AllRigidbodies[i].isKinematic = true;
+            _allRigidbodies[i].isKinematic = true;
         }
     }
 
@@ -41,6 +40,7 @@ public class EnemyController : EnemyAbstract
             MakePhisical();
             Destroy(gameObject, DESTRUCTION_AFTER_DEATH);
         }
+
     }
 
     void MakePhisical()
@@ -48,9 +48,9 @@ public class EnemyController : EnemyAbstract
         _anim.enabled = false;
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.isStopped = true;
-        for (int i = 0; i < AllRigidbodies.Length; i++)
+        for (int i = 0; i < _allRigidbodies.Length; i++)
         {
-            AllRigidbodies[i].isKinematic = false;
+            _allRigidbodies[i].isKinematic = false;
         }
     }
 
@@ -62,6 +62,6 @@ public class EnemyController : EnemyAbstract
     
     public void ActivateBloodParticles()
     {
-        Blood.Play();
+        _blood.Play();
     }
 }

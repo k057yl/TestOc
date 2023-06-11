@@ -12,7 +12,7 @@ public class CharacterModel : IMovable
     
     private float _xRotation;
     private float _velocity;
-    
+
     public CharacterModel(CharacterController characterController, CharacterConfig characterConfig, Transform characterCamera, Transform groundChecker)
     {
         _characterController = characterController;
@@ -31,19 +31,16 @@ public class CharacterModel : IMovable
         _characterController.Move(direction * (_characterConfig.Speed * Time.deltaTime));
     }
 
-    public void RotateX(float mouseDeltaX)
+    public void Rotate(float mouseDeltaX, float mouseDeltaY)
     {
-        _characterController.transform.Rotate(Vector3.up * (mouseDeltaX * _characterConfig.Sensivity * Time.deltaTime));
-    }
+        float sensitivityX = _characterConfig.Sensivity;
+        float sensitivityY = _characterConfig.Sensivity;
 
-    public void RotateY(float mouseDeltaX, float mouseDeltaY)
-    {
-        _xRotation  -= mouseDeltaY;
-
+        _xRotation -= mouseDeltaY * sensitivityY;
         _xRotation = Mathf.Clamp(_xRotation, -90, 90);
 
         _characterCamera.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
-        _characterController.transform.Rotate(Vector3.up * mouseDeltaX);
+        _characterController.transform.Rotate(Vector3.up * (mouseDeltaX * sensitivityX));
     }
     
     public void DoGravity()

@@ -8,22 +8,37 @@ public class CharController : MonoBehaviour
     [SerializeField] private Transform _characterCamera;
     [SerializeField] private Transform _groundChecker;
     [SerializeField] private GameObject _soundManagerPrefab;
-
-    [SerializeField] private Transform _pistolShootPoint;//
+    [SerializeField] private Transform _pistolShootPoint;
+    
 
     private InputController _inputController;
     private SoundManager _soundManager;
 
     private CharacterModel _characterModel;
     private CharacterView _characterView;
-
-    private Weapon _pistol;//
+    private Weapon _pistol;
+   
 
     private bool _isCrouching = false;
-    
-    
 
     private void Start()
+    {
+        InitializeComponents();
+        LockCursor();
+    }
+
+    private void Update()
+    {
+        HandleInput();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+        RotateCharacter();
+    }
+
+    private void InitializeComponents()
     {
         _inputController = new InputController();
 
@@ -33,51 +48,38 @@ public class CharController : MonoBehaviour
         GameObject soundManagerObject = Instantiate(_soundManagerPrefab);
         _soundManager = soundManagerObject.GetComponent<SoundManager>();
 
+        UIBar uiBar = FindObjectOfType<UIBar>();
+        
         _pistol = new Weapon();
-        _pistol.SetStrategy(new PistolStrategy(_pistolShootPoint));
+        _pistol.SetStrategy(new Pistol(_pistolShootPoint, uiBar));
     }
 
-    private void FixedUpdate()
+    private void LockCursor()
     {
-        Move();
-        _characterModel.RotateX(_inputController.GetMouseDeltaInputX());
-
-        if (_inputController.GetMouseButtonMiddle() != 0)
-        {
-            _characterModel.RotateY(_inputController.GetMouseDeltaInputX(), _inputController.GetMouseDeltaInputY());
-        }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    private void Update()
+    private void HandleInput()
     {
         if (_inputController.IsJumpTriggered())
         {
-            _characterView.SetJumpTrigger();
-            _characterModel.Jump();
+            Jump();
         }
 
         if (_inputController.IsCrouchButtonPressed())
         {
-            _isCrouching = !_isCrouching;
-
-            if (_isCrouching)
-            {
-                _characterView.SetShootAnimation(0);
-            }
-            else
-            {
-                _characterView.SetShootAnimation(1);
-            }
+            ToggleCrouch();
         }
 
         if (_inputController.GetMouseLeft())
         {
-            _pistol.Fire(_pistolShootPoint);
+            FireWeapon();
         }
 
         if (_inputController.GetReloaded())
         {
-            _pistol.Reload();
+            ReloadWeapon();
         }
     }
 
@@ -85,9 +87,46 @@ public class CharController : MonoBehaviour
     {
         _characterModel.Move(_inputController.GetMovementInput());
         _characterView.SetSpeed(_inputController.GetMovementInput().magnitude);
+
         if (_inputController.GetMovementInput().magnitude > 0)
         {
             _soundManager.PlayStepSound();
         }
+    }
+
+    private void RotateCharacter()
+    {
+        _characterModel.Rotate(_inputController.GetMouseDeltaInputX(), _inputController.GetMouseDeltaInputY());
+    }
+
+    private void Jump()
+    {
+        _characterView.SetJumpTrigger();
+        _characterModel.Jump();
+    }
+
+    private void ToggleCrouch()
+    {
+        _isCrouching = !_isCrouching;
+
+        if (_isCrouching)
+        {
+            _characterView.SetShootAnimation(0);
+        }
+        else
+        {
+            _characterView.SetShootAnimation(1);
+        }
+    }
+
+    private void FireWeapon()
+    {
+        _pistol.Fire(_pistolShootPoint);
+        _soundManager.PlayShotSound();
+    }
+
+    private void ReloadWeapon()
+    {
+        _pistol.ReloadByButton();
     }
 }
