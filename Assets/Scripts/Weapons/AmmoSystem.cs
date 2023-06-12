@@ -29,7 +29,7 @@ public class AmmoSystem
     
     public bool CanFire()
     {
-        return _currentAmmo > 0 && !_isReloading;
+        return _currentAmmo > Constants.NULL && !_isReloading;
     }
 
     public void Fire()
@@ -42,7 +42,7 @@ public class AmmoSystem
             
             _uiBar.UpdateAmmoText(GetCurrentAmmo(), GetMaxAmmo());
 
-            if (_currentAmmo == 0)
+            if (_currentAmmo == Constants.NULL)
             {
                 Debug.Log("Обойма пуста. Необходима перезарядка.");
                 ReloadAsync();
@@ -61,7 +61,7 @@ public class AmmoSystem
             _isReloading = true;
 
             Debug.Log("Начинается перезарядка...");
-            await Task.Delay(3000);
+            await Task.Delay(Constants.THREE_THOUSAND);
 
             int ammoToAdd = Mathf.Min(_maxAmmo - _currentAmmo, _magazineSize);
             _currentAmmo += ammoToAdd;

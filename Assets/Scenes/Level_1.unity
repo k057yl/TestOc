@@ -2215,8 +2215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7baf451978da88447aac3e7ed59eddfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDelay: 0.1
-  maxDelay: 0.5
   lights: []
 --- !u!1 &705730709
 GameObject:
@@ -7650,7 +7648,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5eb137db70f6b4ca8792a7d0f4b9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flickerFrequency: 0.3
   lights:
   - {fileID: 2139455637}
   - {fileID: 1593389667}
@@ -7985,8 +7982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7baf451978da88447aac3e7ed59eddfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDelay: 0.1
-  maxDelay: 0.5
   lights: []
 --- !u!4 &2053088986 stripped
 Transform:
@@ -8722,7 +8717,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 5
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}

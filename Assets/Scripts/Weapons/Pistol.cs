@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class Pistol : IWeapon
 {
-    private const int PISTOL_DAMAGE = 10;
-
     private AmmoSystem _ammoSystem;
     private UIBar _uiBar;
 
     public Pistol(Transform pistolShootPoint, UIBar uiBar)
     {
-        _ammoSystem = new AmmoSystem(60, 6, uiBar);
+        _ammoSystem = new AmmoSystem(Constants.START_AMMO, Constants.MAGAZINE_SIZE, uiBar);
         _uiBar = uiBar;
     }
 
@@ -27,7 +25,7 @@ public class Pistol : IWeapon
                     EnemyController enemy = hit.collider.GetComponent<EnemyController>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(PISTOL_DAMAGE);
+                        enemy.TakeDamage(Constants.PISTOL_DAMAGE);
                         enemy.ActivateBloodParticles();
                     }
                 }

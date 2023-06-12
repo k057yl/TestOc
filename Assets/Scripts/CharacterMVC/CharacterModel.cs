@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class CharacterModel : IMovable
 {
-    private const int VELOCITY_DECREASEMENT = -2;
-    
     private CharacterController _characterController;
     private CharacterConfig _characterConfig;
 
@@ -37,9 +35,9 @@ public class CharacterModel : IMovable
         float sensitivityY = _characterConfig.Sensivity;
 
         _xRotation -= mouseDeltaY * sensitivityY;
-        _xRotation = Mathf.Clamp(_xRotation, -90, 90);
+        _xRotation = Mathf.Clamp(_xRotation, Constants.NEGATIVE_LIMIT, Constants.POSITIVE_LIMIT);
 
-        _characterCamera.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+        _characterCamera.localRotation = Quaternion.Euler(_xRotation, Constants.NULL, Constants.NULL);
         _characterController.transform.Rotate(Vector3.up * (mouseDeltaX * sensitivityX));
     }
     
@@ -64,7 +62,7 @@ public class CharacterModel : IMovable
         bool isGrounded = IsGround();
         if (isGrounded)
         {
-            _velocity = Mathf.Sqrt(_characterConfig.JumpHeight * VELOCITY_DECREASEMENT * _characterConfig.Gravity);
+            _velocity = Mathf.Sqrt(_characterConfig.JumpHeight * Constants.VELOCITY_DECREASEMENT * _characterConfig.Gravity);
         }
     }
 }

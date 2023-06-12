@@ -3,8 +3,6 @@ using UnityEngine.AI;
 
 public class EnemyController : EnemyAbstract
 {
-    private const float DESTRUCTION_AFTER_DEATH = 1.5f;
-    
     [SerializeField] private Animator _anim;
     [SerializeField] private Rigidbody[] _allRigidbodies;
     [SerializeField] private ParticleSystem _blood;
@@ -12,9 +10,11 @@ public class EnemyController : EnemyAbstract
     private NavMeshAgent _navMeshAgent;
     private GameObject _player;
 
+    private bool _hasKilledBeenCalled = false;
+    
     private void Awake()
     {
-        for (int i = 0; i < _allRigidbodies.Length; i++)
+        for (int i = Constants.NULL; i < _allRigidbodies.Length; i++)
         {
             _allRigidbodies[i].isKinematic = true;
         }
@@ -23,7 +23,7 @@ public class EnemyController : EnemyAbstract
     private void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _player = GameObjectManager.instance.allObject[0];
+        _player = GameObjectManager.instance.allObject[Constants.NULL];
 
         _navMeshAgent.speed = Speed;
     }
@@ -35,12 +35,16 @@ public class EnemyController : EnemyAbstract
             _navMeshAgent.SetDestination(_player.transform.position);
         }
 
-        if (Health <= 0)
+        if (Health <= Constants.NULL)
         {
-            MakePhisical();
-            Destroy(gameObject, DESTRUCTION_AFTER_DEATH);
+            if (!_hasKilledBeenCalled)
+            {
+                MakePhisical();
+                UIBar.OnKilled?.Invoke();
+                _hasKilledBeenCalled = true;
+            }
+            Destroy(gameObject, Constants.DESTRUCTION_AFTER_DEATH);
         }
-
     }
 
     void MakePhisical()
@@ -48,7 +52,7 @@ public class EnemyController : EnemyAbstract
         _anim.enabled = false;
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.isStopped = true;
-        for (int i = 0; i < _allRigidbodies.Length; i++)
+        for (int i = Constants.NULL; i < _allRigidbodies.Length; i++)
         {
             _allRigidbodies[i].isKinematic = false;
         }

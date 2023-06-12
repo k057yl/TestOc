@@ -32,7 +32,7 @@ public class ObjectFactory : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Transform spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        Transform spawnPoint = _spawnPoints[Random.Range(Constants.NULL, _spawnPoints.Length)];
         Instantiate(_enemyPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 }

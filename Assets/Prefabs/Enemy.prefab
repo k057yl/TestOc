@@ -100,6 +100,8 @@ MonoBehaviour:
   - {fileID: 893308041}
   - {fileID: 1080214988}
   _blood: {fileID: 198107819887282536}
+  _characterStats: {fileID: 238532981673792463, guid: abcec963b5e875a419df6058c945f129,
+    type: 3}
 --- !u!195 &1091007184
 NavMeshAgent:
   m_ObjectHideFlags: 0

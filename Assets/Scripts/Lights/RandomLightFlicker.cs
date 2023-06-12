@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class RandomLightFlicker : MonoBehaviour
 {
-    public float minDelay = 0.1f;
-    public float maxDelay = 0.5f;
     public Light[] lights;
     
     void Start()
@@ -16,10 +14,10 @@ public class RandomLightFlicker : MonoBehaviour
     {
         foreach (Light light in lights)
         {
-            if (Random.value < 0.01f)
+            if (Random.value < Constants.DELAY)
             {
                 light.enabled = !light.enabled;
-                float delay = Random.Range(minDelay, maxDelay);
+                float delay = Random.Range(Constants.MIN_DELAY, Constants.MAX_DELAY);
                 StartCoroutine(ResetLight(light, delay));
             }
         }

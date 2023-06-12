@@ -7,15 +7,36 @@ public class UIBar : MonoBehaviour
     [SerializeField] private Text _ammoText;
     [SerializeField] private Text _totalAmmoText;
     [SerializeField] private Text _killedText;
-    
+
+    private int _killedEnemy;
+
+    public int Killed
+    {
+        get { return _killedEnemy; }
+        set { _killedEnemy = value; }
+    }
+
+    public static Action OnKilled;
+
+    private void Start()
+    {
+        OnKilled += SetKilledText;
+    }
+
+    private void OnDestroy()
+    {
+        OnKilled += SetKilledText;
+    }
+
     public void UpdateAmmoText(int currentAmmo, int maxAmmo)
     {
         _ammoText.text = currentAmmo.ToString();
         _totalAmmoText.text = maxAmmo.ToString();
     }
     
-    public void UpdateKilledText(int killed)
+    public void SetKilledText()
     {
-        _killedText.text = killed.ToString();
+        Killed++;
+        _killedText.text = _killedEnemy.ToString();
     }
 }

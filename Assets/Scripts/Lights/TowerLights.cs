@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TowerLights : MonoBehaviour
 {
-    public float flickerFrequency = 2f;
+    private float _flickerFrequency = Constants.MIN_DELAY;
     public Light[] lights;
     
     void Start()
@@ -12,11 +12,11 @@ public class TowerLights : MonoBehaviour
     
     void Update()
     {
-        float flickerDelay = 1f / flickerFrequency;
+        float flickerDelay = Constants.ONE / _flickerFrequency;
 
         foreach (Light light in lights)
         {
-            if (Time.time % flickerDelay < flickerDelay / 2f)
+            if (Time.time % flickerDelay < flickerDelay / Constants.TWO)
             {
                 light.enabled = true;
             }

@@ -17,7 +17,6 @@ public class CharController : MonoBehaviour
     private CharacterModel _characterModel;
     private CharacterView _characterView;
     private Weapon _pistol;
-   
 
     private bool _isCrouching = false;
 
@@ -88,7 +87,7 @@ public class CharController : MonoBehaviour
         _characterModel.Move(_inputController.GetMovementInput());
         _characterView.SetSpeed(_inputController.GetMovementInput().magnitude);
 
-        if (_inputController.GetMovementInput().magnitude > 0)
+        if (_inputController.GetMovementInput().magnitude > Constants.NULL)
         {
             _soundManager.PlayStepSound();
         }
@@ -111,11 +110,11 @@ public class CharController : MonoBehaviour
 
         if (_isCrouching)
         {
-            _characterView.SetShootAnimation(0);
+            _characterView.SetShootAnimation(Constants.NULL);
         }
         else
         {
-            _characterView.SetShootAnimation(1);
+            _characterView.SetShootAnimation(Constants.ONE);
         }
     }
 
