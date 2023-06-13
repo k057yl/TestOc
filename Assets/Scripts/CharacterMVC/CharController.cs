@@ -209,11 +209,9 @@ public class CharController : MonoBehaviour
         };
 
         Popup popup = PopupController.Instance.CreatePopup();
-        PopupController.Instance.Canvas = _uiBar.transform;
-        popup.Init(PopupController.Instance.Canvas,
+        popup.Init(_uiBar.transform,
             "Inspector Cat",
-            "Are you sure you want to quit?",
-            "Stay here",
+            _characterModel.Killed,
             action
         );
     }

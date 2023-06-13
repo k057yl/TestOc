@@ -6,36 +6,41 @@ using System;
 
 public class Popup : MonoBehaviour
 {
-
     [SerializeField] Button _button1;
     [SerializeField] Button _button2;
     [SerializeField] Text _button1Text;
     [SerializeField] Text _button2Text;
-    [SerializeField] Text _popupText;
+
+    private Action _action;
 
 
-    public void Init(Transform canvas, string popupMessage, string btn1txt, string btn2txt, Action action) 
+    public void Init(Transform canvas, string btn1txt, int btn2txt, Action action) 
     {
-        Time.timeScale = 0;
-        _popupText.text = popupMessage;
+        Time.timeScale = Constants.ZERO;
         _button1Text.text = btn1txt;
-        _button2Text.text = btn2txt;
+        _button2Text.text = btn2txt.ToString();
 		
         transform.SetParent(canvas);
         transform.localScale = Vector3.one;
-        GetComponent<RectTransform>().offsetMin = Vector2.zero;
-        GetComponent<RectTransform>().offsetMax = Vector2.zero;
-		
-		
+    }
+
+    private void OnEnable()
+    {
         _button1.onClick.AddListener(() => {
-            Time.timeScale = 1;
+            Time.timeScale = Constants.ONE;
             GameObject.Destroy(this.gameObject);
         });
 		
         _button2.onClick.AddListener(() => {
-            action();
-            Time.timeScale = 1;
+            _action();
+            Time.timeScale = Constants.ONE;
             GameObject.Destroy(this.gameObject);
         });
+    }
+
+    private void OnDisable()
+    {
+        _button1.onClick.RemoveAllListeners();
+        _button2.onClick.RemoveAllListeners();
     }
 }

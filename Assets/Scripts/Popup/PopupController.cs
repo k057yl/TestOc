@@ -4,8 +4,6 @@ public class PopupController : MonoBehaviour
 {
     public static PopupController Instance;
 
-    public Transform Canvas;
-	
     void Start()
     {
         if (Instance != null) {
