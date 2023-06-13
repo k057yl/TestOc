@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class CharController : MonoBehaviour
 {
     [SerializeField] private CharacterController _characterController;
-    //public CharacterController CharacterController => _characterController;
     [SerializeField] private CharacterConfig _characterConfig;
     [SerializeField] private Transform _characterCamera;
     [SerializeField] private Transform _groundChecker;
@@ -142,6 +141,11 @@ public class CharController : MonoBehaviour
         {
             ReloadWeapon();
         }
+        
+        if (_inputController.GetExit())
+        {
+            ExitGame();
+        }
     }
     
     private void ToggleCrouch()
@@ -196,5 +200,21 @@ public class CharController : MonoBehaviour
     private void OnHealthText(int health)
     {
         _uiBar.UpdateHealthText(health);
+    }
+
+    private void ExitGame()
+    {
+        Action action = () => {
+            Application.Quit();
+        };
+
+        Popup popup = PopupController.Instance.CreatePopup();
+        PopupController.Instance.Canvas = _uiBar.transform;
+        popup.Init(PopupController.Instance.Canvas,
+            "Inspector Cat",
+            "Are you sure you want to quit?",
+            "Stay here",
+            action
+        );
     }
 }

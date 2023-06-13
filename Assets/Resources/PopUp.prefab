@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 7419207199087214598}
   - component: {fileID: 7419207199087214616}
   - component: {fileID: 7419207199087214599}
+  - component: {fileID: -9171773653636059022}
   m_Layer: 5
   m_Name: PopUp
   m_TagString: Untagged
@@ -374,6 +375,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-9171773653636059022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7419207199087214597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a509ea9e14144f976166e0ac666bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button1: {fileID: 7419207199340626038}
+  _button2: {fileID: 1643947304549497750}
+  _button1Text: {fileID: 4777905413871551207}
+  _button2Text: {fileID: 1003586882657506056}
+  _popupText: {fileID: 5439329221630466792}
 --- !u!1 &7419207199137721440
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,19 +593,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7419207199340626039}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PopupWindow, Assembly-CSharp
-        m_MethodName: OnButton1Click
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7419207200308273184
 GameObject:
   m_ObjectHideFlags: 0
