@@ -4,19 +4,17 @@ using UnityEngine;
 public class ObjectFactory : MonoBehaviour
 {
     [SerializeField] private GameObject _characterPrefab;
-    [SerializeField] private GameObject _canvasPrefab;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private float _spawnInterval;
-
-    private GameObject _characterInstance;
-    private GameObject _canvasInstance;
-
+    
+    private CharController _char;
+    private EnemyController _enemyController;
+    
     private void Awake()
     {
-        _characterInstance = Instantiate(_characterPrefab);
-        _canvasInstance = Instantiate(_canvasPrefab);
-        
+        _char = Instantiate(_characterPrefab).GetComponent<CharController>();
+
         StartCoroutine(SpawnEnemies());
     }
     
@@ -32,7 +30,8 @@ public class ObjectFactory : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Transform spawnPoint = _spawnPoints[Random.Range(Constants.NULL, _spawnPoints.Length)];
-        Instantiate(_enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        Transform spawnPoint = _spawnPoints[Random.Range(Constants.ZERO, _spawnPoints.Length)];
+        _enemyController = Instantiate(_enemyPrefab, spawnPoint.position, spawnPoint.rotation).GetComponent<EnemyController>();
+        _enemyController.Initialization(_char);
     }
 }

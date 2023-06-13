@@ -3775,51 +3775,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 948763238}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &971248487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 971248489}
-  - component: {fileID: 971248488}
-  m_Layer: 0
-  m_Name: GameObjectList
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &971248488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971248487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ddfe33e1ece60f41bb364b029419c13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allObject: []
---- !u!4 &971248489
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971248487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &972406374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4349306788924888, guid: 3c8004c3271066f45af38964f5903be0,
@@ -7020,8 +6975,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterPrefab: {fileID: 1266888028168481740, guid: 6f06a6152aec2d84eac1966edfccdfcf,
     type: 3}
-  _canvasPrefab: {fileID: 5318468397782674686, guid: 13c74def520dfb145a1ccb73e3812828,
-    type: 3}
   _enemyPrefab: {fileID: 1333611528024815178, guid: b1f6867ca7c6e574c9c902a1cdee0988,
     type: 3}
   _spawnPoints:
@@ -7090,7 +7043,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1663111490
 MonoBehaviour:
@@ -7754,7 +7707,7 @@ Transform:
   m_Children:
   - {fileID: 1216193832}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1871120652
 PrefabInstance:

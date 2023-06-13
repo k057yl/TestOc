@@ -43,8 +43,6 @@ GameObject:
   - component: {fileID: 1750310774051699431}
   - component: {fileID: 1750310774051699424}
   - component: {fileID: 1750310774051699430}
-  - component: {fileID: -4724076865379814586}
-  - component: {fileID: 5539985960861072254}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -90,8 +88,7 @@ MonoBehaviour:
   _soundManagerPrefab: {fileID: 1787872839680099447, guid: 4c438a1573348f749ae7807232c3bc42,
     type: 3}
   _pistolShootPoint: {fileID: 4061094361887832645}
-  _uiBarPrefab: {fileID: 1649022395512865994, guid: 13c74def520dfb145a1ccb73e3812828,
-    type: 3}
+  _uiPrefab: {fileID: 0}
 --- !u!143 &1750310774051699424
 CharacterController:
   m_ObjectHideFlags: 0
@@ -131,30 +128,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-4724076865379814586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750310774051699426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85be78668f7c58742a9afd4d9f501121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5539985960861072254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750310774051699426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3424177a63260a34bbb397a3d4ffdc61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1750310774989573560
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,4 +65,9 @@ public class InputController
 
         return false;
     }
+    
+    public bool GetExit()
+    {
+        return _newInput.Gameplay.Exit.triggered;
+    }
 }

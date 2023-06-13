@@ -98,6 +98,15 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f2f427f-0ae8-4019-b261-60fff0da5c53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,17 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
                     ""action"": ""MouseClickLeftButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bcfda3f-b60f-4d4e-bb70-f48b8caf30c8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +268,7 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
         m_Gameplay_Reloaded = m_Gameplay.FindAction("Reloaded", throwIfNotFound: true);
         m_Gameplay_MouseClickMiddleButton = m_Gameplay.FindAction("MouseClickMiddleButton", throwIfNotFound: true);
         m_Gameplay_MouseClickLeftButton = m_Gameplay.FindAction("MouseClickLeftButton", throwIfNotFound: true);
+        m_Gameplay_Exit = m_Gameplay.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Reloaded;
     private readonly InputAction m_Gameplay_MouseClickMiddleButton;
     private readonly InputAction m_Gameplay_MouseClickLeftButton;
+    private readonly InputAction m_Gameplay_Exit;
     public struct GameplayActions
     {
         private @NewInput m_Wrapper;
@@ -329,6 +351,7 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
         public InputAction @Reloaded => m_Wrapper.m_Gameplay_Reloaded;
         public InputAction @MouseClickMiddleButton => m_Wrapper.m_Gameplay_MouseClickMiddleButton;
         public InputAction @MouseClickLeftButton => m_Wrapper.m_Gameplay_MouseClickLeftButton;
+        public InputAction @Exit => m_Wrapper.m_Gameplay_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +385,9 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
             @MouseClickLeftButton.started += instance.OnMouseClickLeftButton;
             @MouseClickLeftButton.performed += instance.OnMouseClickLeftButton;
             @MouseClickLeftButton.canceled += instance.OnMouseClickLeftButton;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -390,6 +416,9 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
             @MouseClickLeftButton.started -= instance.OnMouseClickLeftButton;
             @MouseClickLeftButton.performed -= instance.OnMouseClickLeftButton;
             @MouseClickLeftButton.canceled -= instance.OnMouseClickLeftButton;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -417,5 +446,6 @@ public partial class @NewInput: IInputActionCollection2, IDisposable
         void OnReloaded(InputAction.CallbackContext context);
         void OnMouseClickMiddleButton(InputAction.CallbackContext context);
         void OnMouseClickLeftButton(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

@@ -19,4 +19,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   GroundCheckRadius: 0.2
-  Sensivity: 0.3
+  Sensivity: 0.2

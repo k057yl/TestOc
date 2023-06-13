@@ -29,7 +29,7 @@ public class AmmoSystem
     
     public bool CanFire()
     {
-        return _currentAmmo > Constants.NULL && !_isReloading;
+        return _currentAmmo > Constants.ZERO && !_isReloading;
     }
 
     public void Fire()
@@ -42,7 +42,7 @@ public class AmmoSystem
             
             _uiBar.UpdateAmmoText(GetCurrentAmmo(), GetMaxAmmo());
 
-            if (_currentAmmo == Constants.NULL)
+            if (_currentAmmo == Constants.ZERO)
             {
                 Debug.Log("Обойма пуста. Необходима перезарядка.");
                 ReloadAsync();
@@ -53,8 +53,8 @@ public class AmmoSystem
             Debug.Log("Невозможно произвести выстрел. Обойма пуста или идет перезарядка.");
         }
     }
-
-    public async void ReloadAsync()
+    
+    public async Task ReloadAsync()
     {
         if (!_isReloading)
         {
@@ -66,22 +66,35 @@ public class AmmoSystem
             int ammoToAdd = Mathf.Min(_maxAmmo - _currentAmmo, _magazineSize);
             _currentAmmo += ammoToAdd;
             _maxAmmo -= ammoToAdd;
-            _isReloading = false;
 
             Debug.Log("Обойма перезаряжена. Патронов: " + _currentAmmo);
-            
+
+            _isReloading = false;
+
             _uiBar.UpdateAmmoText(GetCurrentAmmo(), GetMaxAmmo());
         }
     }
-
-    public void ReloadByButton()
+    
+    public async void ReloadByButton()
     {
         if (!_isReloading && _currentAmmo < _magazineSize)
         {
             _isReloading = true;
 
             Debug.Log("Начинается перезарядка по нажатию кнопки R...");
-            ReloadAsync();
+            await ReloadAsync();
+
+            await Task.Delay(Constants.THREE_THOUSAND);
+
+            int ammoToAdd = Mathf.Min(_magazineSize - _currentAmmo, _maxAmmo);
+            _currentAmmo += ammoToAdd;
+            _maxAmmo -= ammoToAdd;
+
+            _isReloading = false;
+
+            Debug.Log("Обойма перезаряжена. Патронов: " + _currentAmmo);
+
+            _uiBar.UpdateAmmoText(GetCurrentAmmo(), GetMaxAmmo());
         }
     }
 }

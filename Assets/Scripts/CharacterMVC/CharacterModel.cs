@@ -1,68 +1,44 @@
-using UnityEngine;
+using System;
 
-public class CharacterModel : IMovable
+public class CharacterModel
 {
-    private CharacterController _characterController;
-    private CharacterConfig _characterConfig;
-
-    private Transform _characterCamera;
-    private Transform _groundChecker;
-    
-    private float _xRotation;
-    private float _velocity;
-
-    public CharacterModel(CharacterController characterController, CharacterConfig characterConfig, Transform characterCamera, Transform groundChecker)
+    public event Action<int> HealthChanged;
+    private int _health = Constants.ONE_HUNDRED;
+    public int Health
     {
-        _characterController = characterController;
-        _characterConfig = characterConfig;
-        _characterCamera = characterCamera;
-        _groundChecker = groundChecker;
-    }
-    
-    public void Move(Vector3 direction)
-    {
-        DoGravity();
-        
-        var characterTransform = _characterController.transform;
-        direction = characterTransform.right * direction.x + characterTransform.forward * direction.z;
-        
-        _characterController.Move(direction * (_characterConfig.Speed * Time.deltaTime));
-    }
-
-    public void Rotate(float mouseDeltaX, float mouseDeltaY)
-    {
-        float sensitivityX = _characterConfig.Sensivity;
-        float sensitivityY = _characterConfig.Sensivity;
-
-        _xRotation -= mouseDeltaY * sensitivityY;
-        _xRotation = Mathf.Clamp(_xRotation, Constants.NEGATIVE_LIMIT, Constants.POSITIVE_LIMIT);
-
-        _characterCamera.localRotation = Quaternion.Euler(_xRotation, Constants.NULL, Constants.NULL);
-        _characterController.transform.Rotate(Vector3.up * (mouseDeltaX * sensitivityX));
-    }
-    
-    public void DoGravity()
-    {
-        _velocity += _characterConfig.Gravity * Time.fixedDeltaTime;
-        
-        _characterController.Move(Vector3.up * (_velocity * Time.fixedDeltaTime));
-    }
-
-    public bool IsGround()
-    {
-        bool result = Physics.CheckSphere(
-            _groundChecker.position,
-            _characterConfig.GroundCheckRadius,
-            _characterConfig.GroundMask);
-        return result;
-    }
-    
-    public void Jump()
-    {
-        bool isGrounded = IsGround();
-        if (isGrounded)
+        get { return _health; }
+        set
         {
-            _velocity = Mathf.Sqrt(_characterConfig.JumpHeight * Constants.VELOCITY_DECREASEMENT * _characterConfig.Gravity);
+            _health = value;
+            HealthChanged?.Invoke(_health);
         }
+    }
+    
+    public event Action<int> KilledChanged;
+
+    private int _killed = Constants.ZERO;
+    public int Killed
+    {
+        get { return _killed; }
+        set
+        {
+            _killed = value;
+            KilledChanged?.Invoke(_killed);
+        }
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        Health -= damageAmount;
+        
+        if (Health <= Constants.ZERO)
+        {
+            
+        }
+    }
+
+    public void EnemyKills()
+    {
+        Killed++;
     }
 }

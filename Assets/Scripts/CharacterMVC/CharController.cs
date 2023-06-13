@@ -1,56 +1,72 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharController : MonoBehaviour
 {
     [SerializeField] private CharacterController _characterController;
+    //public CharacterController CharacterController => _characterController;
     [SerializeField] private CharacterConfig _characterConfig;
     [SerializeField] private Transform _characterCamera;
     [SerializeField] private Transform _groundChecker;
     [SerializeField] private GameObject _soundManagerPrefab;
     [SerializeField] private Transform _pistolShootPoint;
+    [SerializeField] private GameObject _uiPrefab;
     
-
+    
     private InputController _inputController;
     private SoundManager _soundManager;
-
     private CharacterModel _characterModel;
+    public CharacterModel CharacterModel => _characterModel;
     private CharacterView _characterView;
     private Weapon _pistol;
+    private UIBar _uiBar;
+    
 
+    private Vector3 _direction;
+    private float _xRotation;
+    private float _velocity;
+    private float _deltaX;
+    private float _deltaY;
+    private bool _onGround = false;
     private bool _isCrouching = false;
+
 
     private void Start()
     {
         InitializeComponents();
         LockCursor();
+        
+        _characterModel.KilledChanged += OnKilledChanged;
+        _characterModel.HealthChanged += OnHealthText;
     }
-
-    private void Update()
+    
+    private void OnDisable()
     {
-        HandleInput();
+        _characterModel.KilledChanged -= OnKilledChanged;
+        _characterModel.HealthChanged -= OnHealthText;
     }
-
-    private void FixedUpdate()
+    
+    private void Initialization(UIBar uiBar)
     {
-        Move();
-        RotateCharacter();
+        _uiBar = uiBar;
     }
-
+    
     private void InitializeComponents()
     {
         _inputController = new InputController();
+        _characterModel = new CharacterModel();
 
-        _characterModel = new CharacterModel(_characterController, _characterConfig, _characterCamera, _groundChecker);
         _characterView = GetComponent<CharacterView>();
 
         GameObject soundManagerObject = Instantiate(_soundManagerPrefab);
         _soundManager = soundManagerObject.GetComponent<SoundManager>();
 
-        UIBar uiBar = FindObjectOfType<UIBar>();
-        
+        _uiBar = Instantiate(_uiPrefab).GetComponent<UIBar>();
+        Initialization(_uiBar);
+
         _pistol = new Weapon();
-        _pistol.SetStrategy(new Pistol(_pistolShootPoint, uiBar));
+        _pistol.SetStrategy(new Pistol(_pistolShootPoint, _uiBar));
     }
 
     private void LockCursor()
@@ -59,6 +75,52 @@ public class CharController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void FixedUpdate()
+    {
+        Move();
+        Rotate();
+    }
+
+    private void Update()
+    {
+        HandleInput();
+    }
+
+    private void Move()
+    {
+        DoGravity();
+        
+        _direction = _inputController.GetMovementInput();
+        var characterTransform = _characterController.transform;
+        _direction = characterTransform.right * _direction.x + characterTransform.forward * _direction.z;
+        
+        _characterController.Move(_direction * (_characterConfig.Speed * Time.deltaTime));
+        _characterView.PlayWalkAnimation(_direction);
+        _characterView.PlayWalkLeft(_direction);
+    }
+
+    private void Rotate()
+    {
+        _deltaX = _inputController.GetMouseDeltaInputX();
+        _deltaY = _inputController.GetMouseDeltaInputY();
+        
+        float sensitivityX = _characterConfig.Sensivity;
+        float sensitivityY = _characterConfig.Sensivity;
+
+        _xRotation -= _deltaY * sensitivityY;
+        _xRotation = Mathf.Clamp(_xRotation, Constants.NEGATIVE_LIMIT, Constants.POSITIVE_LIMIT);
+
+        _characterCamera.localRotation = Quaternion.Euler(_xRotation, Constants.ZERO, Constants.ZERO);
+        _characterController.transform.Rotate(Vector3.up * (_deltaX * sensitivityX));
+    }
+    
+    private void DoGravity()
+    {
+        _velocity += _characterConfig.Gravity * Time.fixedDeltaTime;
+        
+        _characterController.Move(Vector3.up * (_velocity * Time.fixedDeltaTime));
+    }
+    
     private void HandleInput()
     {
         if (_inputController.IsJumpTriggered())
@@ -81,40 +143,18 @@ public class CharController : MonoBehaviour
             ReloadWeapon();
         }
     }
-
-    private void Move()
-    {
-        _characterModel.Move(_inputController.GetMovementInput());
-        _characterView.SetSpeed(_inputController.GetMovementInput().magnitude);
-
-        if (_inputController.GetMovementInput().magnitude > Constants.NULL)
-        {
-            _soundManager.PlayStepSound();
-        }
-    }
-
-    private void RotateCharacter()
-    {
-        _characterModel.Rotate(_inputController.GetMouseDeltaInputX(), _inputController.GetMouseDeltaInputY());
-    }
-
-    private void Jump()
-    {
-        _characterView.SetJumpTrigger();
-        _characterModel.Jump();
-    }
-
+    
     private void ToggleCrouch()
     {
         _isCrouching = !_isCrouching;
 
         if (_isCrouching)
         {
-            _characterView.SetShootAnimation(Constants.NULL);
+            _characterView.PlayShootAnimation(Constants.ZERO);
         }
         else
         {
-            _characterView.SetShootAnimation(Constants.ONE);
+            _characterView.PlayShootAnimation(Constants.ONE);
         }
     }
 
@@ -127,5 +167,34 @@ public class CharController : MonoBehaviour
     private void ReloadWeapon()
     {
         _pistol.ReloadByButton();
+    }
+    
+    private bool IsGround()
+    {
+        bool result = Physics.CheckSphere(
+            _groundChecker.position,
+            _characterConfig.GroundCheckRadius,
+            _characterConfig.GroundMask);
+        return result;
+    }
+    
+    private void Jump()
+    {
+        _onGround = IsGround();
+        if(_onGround)
+        {
+            _characterView.PlayJumpTrigger(_onGround);
+            _velocity = Mathf.Sqrt(_characterConfig.JumpHeight * Constants.VELOCITY_DECREASEMENT * _characterConfig.Gravity);
+        }
+    }
+    
+    private void OnKilledChanged(int killed)
+    {
+        _uiBar.UpdateKilledText(killed);
+    }
+    
+    private void OnHealthText(int health)
+    {
+        _uiBar.UpdateHealthText(health);
     }
 }

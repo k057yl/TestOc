@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,53 +9,48 @@ public class EnemyController : EnemyAbstract
     [SerializeField] private ParticleSystem _blood;
     
     private NavMeshAgent _navMeshAgent;
-    private GameObject _player;
+    private CharController _charController;
 
-    private bool _hasKilledBeenCalled = false;
+    private int _damage = Constants.TEN;
+    private bool _canDamage = true;
+    private float _damageCooldown = Constants.TWO;
     
     private void Awake()
     {
-        for (int i = Constants.NULL; i < _allRigidbodies.Length; i++)
+        foreach (var rb in _allRigidbodies)
         {
-            _allRigidbodies[i].isKinematic = true;
+            rb.isKinematic = true;
         }
     }
 
     private void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _player = GameObjectManager.instance.allObject[Constants.NULL];
-
         _navMeshAgent.speed = Speed;
     }
-    
+
     private void Update()
     {
-        if (_player != null)
+        if (_charController != null)
         {
-            _navMeshAgent.SetDestination(_player.transform.position);
+            _navMeshAgent.SetDestination(_charController.transform.position);
         }
-
-        if (Health <= Constants.NULL)
-        {
-            if (!_hasKilledBeenCalled)
-            {
-                MakePhisical();
-                UIBar.OnKilled?.Invoke();
-                _hasKilledBeenCalled = true;
-            }
-            Destroy(gameObject, Constants.DESTRUCTION_AFTER_DEATH);
-        }
+        Damage();
     }
 
-    void MakePhisical()
+    public void Initialization(CharController charController)
+    {
+        _charController = charController;
+    }
+    
+    void MakePhysical()
     {
         _anim.enabled = false;
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.isStopped = true;
-        for (int i = Constants.NULL; i < _allRigidbodies.Length; i++)
+        foreach (var rb in _allRigidbodies)
         {
-            _allRigidbodies[i].isKinematic = false;
+            rb.isKinematic = false;
         }
     }
 
@@ -62,10 +58,43 @@ public class EnemyController : EnemyAbstract
     {
         Health -= damage;
         ActivateBloodParticles();
+        if (Health <= Constants.ZERO)
+        {
+            Die();
+        }
     }
     
     public void ActivateBloodParticles()
     {
         _blood.Play();
+    }
+
+    private void Die()
+    {
+        MakePhysical();
+        _charController.CharacterModel.EnemyKills();
+        Destroy(gameObject, Constants.DESTRUCTION_AFTER_DEATH);
+    }
+    
+    private void Damage()
+    {
+        if (_canDamage && _charController != null)
+        {
+            Vector3 direction = _charController.transform.position - transform.position;
+            float distance = direction.magnitude;
+
+            if (distance <= Constants.ONE)
+            {
+                _charController.CharacterModel.TakeDamage(_damage);
+                _canDamage = false;
+                StartCoroutine(DamageCooldownCoroutine());
+            }
+        }
+    }
+
+    private IEnumerator DamageCooldownCoroutine()
+    {
+        yield return new WaitForSeconds(_damageCooldown);
+        _canDamage = true;
     }
 }
