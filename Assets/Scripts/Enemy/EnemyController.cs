@@ -26,7 +26,7 @@ public class EnemyController : EnemyAbstract
     private void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.speed = Speed;
+        _navMeshAgent.speed = _speed;
     }
 
     private void Update()
@@ -56,9 +56,9 @@ public class EnemyController : EnemyAbstract
 
     public void TakeDamage(int damage)
     {
-        Health -= damage;
+        _health -= damage;
         ActivateBloodParticles();
-        if (Health <= Constants.ZERO)
+        if (_health <= Constants.ZERO)
         {
             Die();
         }

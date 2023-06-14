@@ -210,7 +210,7 @@ public class CharController : MonoBehaviour
 
         Popup popup = PopupController.Instance.CreatePopup();
         popup.Init(_uiBar.transform,
-            "Inspector Cat",
+            "You killed",
             _characterModel.Killed,
             action
         );

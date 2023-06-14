@@ -84,8 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b19a0af35ebdc48a920098256634aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
-  Speed: 1
+  _health: 30
+  _speed: 1
   _anim: {fileID: 2331152287597109824}
   _allRigidbodies:
   - {fileID: 1967517751}
@@ -100,8 +100,6 @@ MonoBehaviour:
   - {fileID: 893308041}
   - {fileID: 1080214988}
   _blood: {fileID: 198107819887282536}
-  _characterStats: {fileID: 238532981673792463, guid: abcec963b5e875a419df6058c945f129,
-    type: 3}
 --- !u!195 &1091007184
 NavMeshAgent:
   m_ObjectHideFlags: 0

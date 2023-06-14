@@ -195,7 +195,7 @@ PrefabInstance:
     - target: {fileID: 4519968646844386479, guid: bb1f02f754bfb4d1c97f96812c5f5157,
         type: 3}
       propertyPath: m_Name
-      value: "\u0421artridges"
+      value: "\u0421artridges Variant"
       objectReference: {fileID: 0}
     - target: {fileID: 4519968647072951946, guid: bb1f02f754bfb4d1c97f96812c5f5157,
         type: 3}
@@ -222,5 +222,6 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4519968646844386477, guid: bb1f02f754bfb4d1c97f96812c5f5157, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bb1f02f754bfb4d1c97f96812c5f5157, type: 3}

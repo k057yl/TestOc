@@ -4,7 +4,7 @@ public class InputController
 {
     private NewInput _newInput;
 
-    private bool _isCrouchButtonPressed = false;//
+    private bool _isCrouchButtonPressed = false;
     
     public InputController()
     {

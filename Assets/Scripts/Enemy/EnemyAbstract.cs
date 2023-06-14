@@ -2,6 +2,6 @@ using UnityEngine;
 
 public abstract class EnemyAbstract : MonoBehaviour
 {
-    public int Health;
-    public float Speed;
+    [SerializeField] protected int _health;
+    [SerializeField] protected float _speed;
 }
