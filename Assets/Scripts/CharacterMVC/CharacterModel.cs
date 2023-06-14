@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.SceneManagement;
 
 public class CharacterModel
 {
@@ -30,10 +31,11 @@ public class CharacterModel
     public void TakeDamage(int damageAmount)
     {
         Health -= damageAmount;
+        SoundManager.instance.PlayDamageSound();
         
         if (Health <= Constants.ZERO)
         {
-            
+            SceneManager.LoadScene(Constants.ZERO);
         }
     }
 

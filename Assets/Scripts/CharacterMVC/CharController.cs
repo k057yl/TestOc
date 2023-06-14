@@ -14,7 +14,6 @@ public class CharController : MonoBehaviour
     
     
     private InputController _inputController;
-    private SoundManager _soundManager;
     private CharacterModel _characterModel;
     public CharacterModel CharacterModel => _characterModel;
     private CharacterView _characterView;
@@ -58,8 +57,7 @@ public class CharController : MonoBehaviour
 
         _characterView = GetComponent<CharacterView>();
 
-        GameObject soundManagerObject = Instantiate(_soundManagerPrefab);
-        _soundManager = soundManagerObject.GetComponent<SoundManager>();
+        Instantiate(_soundManagerPrefab);
 
         _uiBar = Instantiate(_uiPrefab).GetComponent<UIBar>();
         Initialization(_uiBar);
@@ -95,7 +93,10 @@ public class CharController : MonoBehaviour
         
         _characterController.Move(_direction * (_characterConfig.Speed * Time.deltaTime));
         _characterView.PlayWalkAnimation(_direction);
-        _characterView.PlayWalkLeft(_direction);
+        if (_inputController.GetMovementInput().magnitude > 0f)
+        {
+            SoundManager.instance.PlayStepSound();
+        }
     }
 
     private void Rotate()
@@ -161,13 +162,23 @@ public class CharController : MonoBehaviour
             _characterView.PlayShootAnimation(Constants.ONE);
         }
     }
-
+    
+    private void FireWeapon()
+    {
+        if (!_pistol.GetIsReloading())
+        {
+            _pistol.Fire(_pistolShootPoint);
+            SoundManager.instance.PlayShootSound();
+        }
+    }
+/*
     private void FireWeapon()
     {
         _pistol.Fire(_pistolShootPoint);
-        _soundManager.PlayShotSound();
+        
+        SoundManager.instance.PlayShootSound();
     }
-
+*/
     private void ReloadWeapon()
     {
         _pistol.ReloadByButton();
@@ -189,6 +200,7 @@ public class CharController : MonoBehaviour
         {
             _characterView.PlayJumpTrigger(_onGround);
             _velocity = Mathf.Sqrt(_characterConfig.JumpHeight * Constants.VELOCITY_DECREASEMENT * _characterConfig.Gravity);
+            SoundManager.instance.PlayJumpSound();
         }
     }
     

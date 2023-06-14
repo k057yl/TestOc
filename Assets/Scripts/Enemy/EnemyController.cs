@@ -73,6 +73,7 @@ public class EnemyController : EnemyAbstract
     {
         MakePhysical();
         _charController.CharacterModel.EnemyKills();
+        SoundManager.instance.PlayDeadSound();
         Destroy(gameObject, Constants.DESTRUCTION_AFTER_DEATH);
     }
     

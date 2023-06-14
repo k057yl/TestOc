@@ -7,6 +7,10 @@ public class AmmoSystem
     private int _magazineSize;
     private int _currentAmmo;
     private bool _isReloading;
+    public bool IsReloading
+    {
+        get { return _isReloading; }
+    }
     private UIBar _uiBar;
 
     public AmmoSystem(int maxAmmo, int magazineSize, UIBar uiBar)

@@ -1,13 +1,21 @@
 using System.Collections;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
-{ 
-    private AudioSource _audioSource;
+using System;
+using UnityEngine;
 
+public class SoundManager : MonoBehaviour
+{
+    public static SoundManager instance;
+
+    [SerializeField] private AudioClip _deadSound;
+    [SerializeField] private AudioClip _shootSound;
+    [SerializeField] private AudioClip _takeItemSound;
+    [SerializeField] private AudioClip _damageSound;
     [SerializeField] private AudioClip _stepSound;
-    [SerializeField] private AudioClip _shotSound;
-    [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private AudioClip _jumpSound;
+    
+    private AudioSource _audioSource;
     
     private bool _canPlayStepSound = true;
     private float _stepSoundInterval = 0.5f;
@@ -15,15 +23,38 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
-
-        if (_audioSource == null)
+        if (instance == null)
         {
-            _audioSource = gameObject.AddComponent<AudioSource>();
-            _audioSource.enabled = true;
+            instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
+    public void PlayDeadSound()
+    {
+        _audioSource.PlayOneShot(_deadSound);
+    }
+
+    public void PlayShootSound()
+    {
+        _audioSource.PlayOneShot(_shootSound);
+    }
+    
+    public void PlayItemSound()
+    {
+        _audioSource.PlayOneShot(_takeItemSound);
+    }
+    
+    public void PlayDamageSound()
+    {
+        _audioSource.PlayOneShot(_damageSound);
+    }
+    
     public void PlayStepSound()
     {
         if (_canPlayStepSound)
@@ -48,13 +79,8 @@ public class SoundManager : MonoBehaviour
         }
     }
     
-    public void PlayShotSound()
+    public void PlayJumpSound()
     {
-        _audioSource.PlayOneShot(_shotSound);
-    }
-    
-    public void PlayDeathSound()
-    {
-        _audioSource.PlayOneShot(_deathSound);
+        _audioSource.PlayOneShot(_jumpSound);
     }
 }

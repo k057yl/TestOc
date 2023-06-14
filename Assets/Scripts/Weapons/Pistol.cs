@@ -4,6 +4,7 @@ public class Pistol : IWeapon
 {
     private AmmoSystem _ammoSystem;
     private UIBar _uiBar;
+    
 
     public Pistol(Transform pistolShootPoint, UIBar uiBar)
     {
@@ -40,5 +41,10 @@ public class Pistol : IWeapon
     public void ReloadByButton()
     {
         _ammoSystem.ReloadByButton();
+    }
+    
+    public bool GetIsReloading()
+    {
+        return _ammoSystem.IsReloading;
     }
 }

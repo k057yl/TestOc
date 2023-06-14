@@ -45,9 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215028bd336951e448ba3114499494bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deadSound: {fileID: 8300000, guid: bd8857660a16ba549b8cc522d93d9117, type: 3}
+  _shootSound: {fileID: 8300000, guid: 26e19616f6ba9f6469e9d3d6c38b23fe, type: 3}
+  _takeItemSound: {fileID: 0}
+  _damageSound: {fileID: 8300000, guid: 87e2452fe2c754248926c9a9ab93a467, type: 3}
   _stepSound: {fileID: 8300000, guid: a35ec44331d4b514cabf31e928f058b5, type: 3}
-  _shotSound: {fileID: 8300000, guid: 26e19616f6ba9f6469e9d3d6c38b23fe, type: 3}
-  _deathSound: {fileID: 8300000, guid: bd8857660a16ba549b8cc522d93d9117, type: 3}
+  _jumpSound: {fileID: 8300000, guid: 2ebf2421dddc15a45b7fc6ae8197b1c0, type: 3}
 --- !u!82 &1787872839680099450
 AudioSource:
   m_ObjectHideFlags: 0

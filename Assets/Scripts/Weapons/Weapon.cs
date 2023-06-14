@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class Weapon
 {
-    private IWeapon m_Weapon;
+    private IWeapon _weapon;
 
     public void SetStrategy(IWeapon strategy)
     {
-        m_Weapon = strategy;
+        _weapon = strategy;
     }
     
     public void Fire(Transform shootPoint)
     {
-        m_Weapon.Fire(shootPoint);
+        _weapon.Fire(shootPoint);
     }
     
     public void ReloadByButton()
     {
-        m_Weapon.ReloadByButton();
+        _weapon.ReloadByButton();
+    }
+    
+    public bool GetIsReloading()
+    {
+        return _weapon.GetIsReloading();
     }
 }
